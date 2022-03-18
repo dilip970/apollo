@@ -22,7 +22,7 @@ def signup_page(request):
 
 def login_page(request):
     if isAlreadyLogin(request):
-        return HttpResponseRedirect('/index/')
+        return HttpResponseRedirect('/userdashboard/')
     else:
         try:
             msg = request.session['msg']
