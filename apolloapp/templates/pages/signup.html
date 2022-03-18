@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Apollo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+
+</head>
+<body>
+    {% include 'pages/navbar.html' %}
+
+    <div class="row rw">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            {% if 'Successfully' in msg %}
+            <div class="alert alert-success" style="margin-top: 10px;">
+                <center><strong>{{msg}}</strong></center>
+              </div> 
+              {% elif 'Already Exists' in msg or "Doesn't Matching" in msg %}
+            <div class="alert alert-danger" style="margin-top: 10px;">
+                <center><strong>{{msg}}</strong></center>
+              </div>
+        {% endif %}
+           <div class="signup-form">
+                <h3> Patient Signup</h3>
+                <form action="/signup/" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="firstname">Name</label>
+                            <input type="text" class="form-control fm" name="name" required>
+                        </div>
+
+                       
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <input type="text" class="form-control fm" name="mobile" maxlength="10" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control fm" name="email" id="email1" required>
+                            <p id="msg1"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control fm" name="password" id="Password" required>
+                        </div>
+                    </div>
+                   
+                    </div>
+                    <div class="row">
+                    
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label for="confirmpassword">Confirm password</label>
+                            <input type="password" class="form-control fm" name="confirmpassword" id="ConfirmPassword" onChange="passwordcheck();" required>
+                        </div>        
+                    </div>
+                    <div class="col-md-12">
+                        <center><p id="msg2" ></p></center>
+                    </div>
+                    </div>
+                    <p>if you have account ? <a href="/loginpage/" style="text-decoration: none;"><strong>login here</strong></a></p>
+                    <button type="submit" id="btn-submit" class="btn btn-user" >Submit</button>
+                </form>
+            </div>
+            </div>
+            </div>
+
+</body>
+</html>
+<script>
+    function passwordcheck() {
+    var password = $("#Password").val();
+    var confirmPassword = $("#ConfirmPassword").val();
+    if (password != confirmPassword){
+        $("#msg2").html("<center><p><strong style='color: red;'>Password and ConfirmPassword Not Matching...!</strong></p></center>");
+        $('#btn-submit').prop('disabled' , true);
+    }
+    else {
+        // $("#msg1").html("<center><p><strong style='color: green;'>Passwords is Matching...!</strong></p></center>");
+        $("#msg2").html("");
+        $('#btn-submit').prop('disabled' , false);
+    }
+};
+</script>

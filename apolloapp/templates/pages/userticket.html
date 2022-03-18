@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>User ticket</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+
+</head>
+<body style="background-color: #fff;">
+
+    <div class="row rw">
+      <div class="col-md-2">
+          <div class="side-admin">
+            <img src="/static/assets/images/admin.png" alt="">
+            <h3 class="text-center">User Dashboard</h3>
+
+            <ul class="list-group">
+                <li class="list-group-item"><a href="/userdashboard/"> userdashboard</a></li>
+
+                <li class="list-group-item"><a href="/userticket/"> Tickets</a></li>
+                <li class="list-group-item"><a href="/userdashboard/"> orders</a></li>
+                <li class="list-group-item"><a href="/userdashboard/"> refund</a></li>
+                <li class="list-group-item"><a href="/logout/"> Logout</a></li>
+              </ul>
+          </div>
+
+      </div>
+    <div class="col-md-10">
+        <div class="users-list">
+                
+            <h3>Raise your ticket</h3>
+            <div class="row">
+                <div class="col-sm-3">
+                    {% if msg %}
+                    <div class="alert alert-success" style="margin-top: 10px;">
+                      <center><strong>{{msg}}</strong></center>
+                    </div>
+                    {% endif %}
+        
+            <form action="/raiseticket/" method="post" >
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" placeholder="Compliant" class="form-control fm"  name="compliant" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary"> Raise ticket</button>                
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="table-user mt-5">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Ticke No</th>
+                      <th>Compliant</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for c in ticket %}
+                <tr>
+                  <td>{{c.ticketid}}</td>
+                  <td>{{c.compliant}}</td>
+                    {% if c.status == 1 %}
+                    <td><button class="btn btn-success">Solved</button></td>
+                    {% elif c.status == 0 %}
+                    <td><button class="btn btn-warning">Pending</button></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+                </table>
+              </div> 
+        </div>
+    </div>
+
+           
+          </div>
+    </div>
+    
+    </div>
+
+    
+</body>
+</html>
+

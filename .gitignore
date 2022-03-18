@@ -1,0 +1,18 @@
+# Environments 
+*.pyc
+
+
+.json
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>admin tickets list</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/static/assets/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body style="background-color: #fff;">
+
+    <div class="row rw">
+      <div class="col-lg-2">
+          <div class="side-admin2">
+            <img src="/static/assets/images/admin.png" alt="">
+            <h3>Admin Dashboard</h3>
+
+            <ul class="list-group">
+                <li class="list-group-item jj"><a href="/admindashboard/"> Users list</a></li>
+                <li class="list-group-item jj"><a href="/ticketlist/"> Tickets</a></li>
+                <li class="list-group-item jj"><a href="/logout/"> Logout</a></li>
+              </ul>
+          </div>
+
+      </div>
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="table-user mt-5">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Ticke No</th>
+                              <th>Compliant</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for c in ticket %}
+                        <tr>
+                          <td>{{c.ticketid}}</td>
+                          <td>{{c.compliant}}</td>
+                            {% if c.status == 1 %}
+
+                            <td>
+                                 <button class="btn btn-success"
+                                 >Solved</button>
+                               </td>
+                            {% elif c.status == 0 %}
+                            <td><button class="btn btn-danger" data-toggle="modal" data-target="#ActiveModal"
+                                onclick="account({{c.id}})" title="if compliant is solved? you can change solved status">Pending</button>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                        </table>
+                      </div> 
+                </div>
+            </div>
+
+
+</div> 
+   </div>
+
+
+
+
+   <div class="modal fade" id="ActiveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Compliant is Solved ?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/compliantstatus/" method="POST">
+          {% csrf_token %}
+          <input type="hidden" id="id2" name="id">
+          <div class="modal-body text-center">
+            Are you close  the compliant?
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-danger">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+    function account(id) {
+      $('#id2').val(id)
+    }
+  </script>
+  <script>
+    function inaccount(id) {
+      $('#id3').val(id)
+    }
+  </script>
